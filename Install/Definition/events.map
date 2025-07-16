@@ -1,0 +1,93 @@
+{
+    "0": {
+        "Field": "id",
+        "Type": "bigint(20)",
+        "Null": "NO",
+        "Key": "PRI",
+        "Default": null,
+        "Extra": "auto_increment"
+    },
+    "1": {
+        "Field": "created",
+        "Type": "datetime",
+        "Null": "NO",
+        "Key": "",
+        "Default": "CURRENT_TIMESTAMP",
+        "Extra": ""
+    },
+    "2": {
+        "Field": "modified",
+        "Type": "datetime",
+        "Null": "NO",
+        "Key": "",
+        "Default": "CURRENT_TIMESTAMP",
+        "Extra": ""
+    },
+    "3": {
+        "Field": "owner",
+        "Type": "varchar(255)",
+        "Null": "YES",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+    },
+    "4": {
+        "Field": "category",
+        "Type": "varchar(255)",
+        "Null": "YES",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+    },
+    "5": {
+        "Field": "message",
+        "Type": "text",
+        "Null": "YES",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+    },
+    "6": {
+        "Field": "icon",
+        "Type": "varchar(255)",
+        "Null": "YES",
+        "Key": "",
+        "Default": "circle",
+        "Extra": ""
+    },
+    "7": {
+        "Field": "color",
+        "Type": "varchar(255)",
+        "Null": "YES",
+        "Key": "",
+        "Default": "secondary",
+        "Extra": ""
+    },
+    "8": {
+        "Field": "link",
+        "Type": "varchar(255)",
+        "Null": "YES",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+    },
+    "9": {
+        "Field": "targetTable",
+        "Type": "varchar(255)",
+        "Null": "YES",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+    },
+    "10": {
+        "Field": "targetId",
+        "Type": "varchar(255)",
+        "Null": "YES",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+    },
+    "engine": "InnoDB",
+    "charset": "utf8mb4",
+    "collation": "general_ci"
+}
