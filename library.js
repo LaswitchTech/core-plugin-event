@@ -228,7 +228,6 @@ builder.add('widgets','events', class extends builder.ComponentClass {
             },
             error: function(xhr, status, error) {
                 console.error('Error fetching data:', error);
-                reject(error);
             },
             success: function(response) {
 
