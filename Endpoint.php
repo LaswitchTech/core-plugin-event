@@ -1,7 +1,7 @@
 <?php
 
 // Import additionnal class into the global namespace
-use \LaswitchTech\Core\Abstracts\Endpoint;
+use \LaswitchTech\Core\Base\BaseEndpoint;
 
 class EventEndpoint extends BaseEndpoint {
 
