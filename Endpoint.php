@@ -3,9 +3,7 @@
 // Import additionnal class into the global namespace
 use \LaswitchTech\Core\Abstracts\Endpoint;
 
-class EventEndpoint extends Endpoint {
-
-    protected $name = 'Event';
+class EventEndpoint extends BaseEndpoint {
 
     /**
      * Constructor
@@ -16,18 +14,11 @@ class EventEndpoint extends Endpoint {
         // Call Parent Constructor
         parent::__construct();
 
-        // Retrieve the namespace
-        $namespace = $this->Request->getNamespace();
-
-        // Set Global access
-        $this->Public = false;
+        // Initialize the Endpoint
+        $this->init('event');
 
         // Set Properties
-        switch($namespace){
-            case "/event/delete":
-                $this->Level = 4;
-                break;
-        }
+        $this->required = [];
     }
 
     /**
