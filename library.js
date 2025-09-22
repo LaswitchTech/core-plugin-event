@@ -215,26 +215,16 @@ builder.add('widgets','events', class extends builder.ComponentClass {
         }
 
         // Retrieve Records
-        $.ajax({
-            url: '/api/event/fetchAll',
-            headers: {'X-CSRF-Authorization': CSRF_KEY},
-            type: 'POST',dataType: 'json',
-            data: {
-                conditions: [
-                    {key: 'targetTable', operator: '=', value: this._properties.targetTable},
-                    {key: 'targetId', operator: '=', value: this._properties.targetId},
-                    {key: 'isArchived', operator: '<>', value: 1},
-                ]
-            },
-            error: function(xhr, status, error) {
-                console.error('Error fetching data:', error);
-            },
-            success: function(response) {
-
-                // Add Records
-                for(const [key, record] of Object.entries(response.records)){
-                    self.add(record);
-                }
+        API.endpoint('/event/fetchAll').data({
+            conditions: [
+                {key: 'targetTable', operator: '=', value: this._properties.targetTable},
+                {key: 'targetId', operator: '=', value: this._properties.targetId},
+                {key: 'isArchived', operator: '<>', value: 1},
+            ]
+        }).execute(function(response){
+            // Add Records
+            for(const [key, record] of Object.entries(response.records)){
+                self.add(record);
             }
         });
 
@@ -398,22 +388,15 @@ builder.add('widgets','events', class extends builder.ComponentClass {
                         modal.spinner(true);
 
                         // AJAX Request - Delete the event
-                        $.ajax({
-                            url: '/api/event/delete?id='+id,
-                            type: 'GET',dataType: 'json',
-                            error: function(xhr, status, error) {
-                                console.error('Error deleting event:', error);
-                                modal.hide();
-                            },
-                            success: function(response) {
+                        API.endpoint('/event/delete?id='+id).execute(function(response){
+                            // Remove the event from the timeline
+                            self._events[id].remove();
+                            delete self._events[id];
 
-                                // Remove the event from the timeline
-                                self._events[id].remove();
-                                delete self._events[id];
-
-                                // Close the modal
-                                modal.hide();
-                            }
+                            // Close the modal
+                            modal.hide();
+                        },function(xhr, status, error){
+                            modal.hide();
                         });
                     },
                 },
