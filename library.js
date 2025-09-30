@@ -409,3 +409,130 @@ builder.add('widgets','events', class extends builder.ComponentClass {
         );
     }
 });
+
+builder.add('widgets','eventsCounter', class extends builder.ComponentClass {
+
+    _init(){
+        this._properties = {
+            class: {
+                component: null,
+            },
+            data: null,
+            color: 'primary',
+            icon: 'circle',
+            title: null,
+            conditions: [],
+            interval: 10000,
+            autoStart: false,
+            callback: {},
+        };
+        this._badge = null;
+    }
+
+    _create(){
+
+        // Set Self
+        const self = this;
+
+        // Create Component
+        this._component = $(document.createElement('div')).attr({
+            'id': 'tasks' + this._id,
+            'class': 'widgetTasks',
+        });
+        this._component.id = this._component.attr('id');
+
+        // Add class to the component
+        if(this._properties.class.component){
+            this._component.addClass(this._properties.class.component);
+        }
+
+        // Create the Badge
+        this._builder.Component(
+            "badge",
+            this._component,
+            {
+                class: {
+                    component: 'shadow',
+                },
+                icon: this._properties.icon,
+                color: this._properties.color,
+            },
+            function(badge,component){
+
+                // Set the badge
+                self.badge(badge);
+
+                // Set Content
+                component.label = $(document.createElement("h5")).addClass("m-0").text(self._properties.title).appendTo(component.content);
+                component.count = $(document.createElement("p")).addClass("m-0").appendTo(component.content);
+
+                // Check if autoStart is enabled
+                if(self._properties.autoStart){
+
+                    // Start
+                    self.start();
+                }
+            },
+        );
+    }
+
+    load(records = null){
+
+        // Set Self
+        const self = this;
+
+        // Check if records are provided
+        if(records !== null && Object.entries(records).length > 0){
+
+            // Loop through the records
+            for(const [key, record] of Object.entries(records)){
+                this.add(record);
+            }
+            return this;
+        }
+
+        // AJAX Request
+        API.endpoint('/event/count').data({conditions: this._properties.conditions}).execute(function(response){
+            self.badge()._component.count.text(response.count);
+        });
+
+        return this;
+    }
+
+    start(){
+
+        // Set Self
+        const self = this;
+
+        // Check if the interval is already set
+        if(this._interval){
+            console.warn('Interval is already set, stopping the previous one.');
+            clearInterval(this._interval);
+        }
+
+        // Initial Load
+        this.load();
+
+        // Set the interval to check for changes
+        this._interval = setInterval(function(){
+            self.load();
+        }, this._properties.interval);
+    }
+
+    stop(){
+        // Check if the interval is set
+        if(this._interval){
+            clearInterval(this._interval);
+            this._interval = null;
+        } else {
+            console.warn('No interval is currently set.');
+        }
+    }
+
+    badge(badge = null){
+        if(badge){
+            this._badge = badge;
+        }
+        return this._badge;
+    }
+});
