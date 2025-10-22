@@ -42,7 +42,7 @@ if(typeof dashboard !== "undefined"){
                     break;
             }
             if(this._options.owner && this._options.owner !== 'all'){
-                conditions.push({key: 'owner', operator: '=', value: this._options.owner});
+                conditions.push({key: 'owner', operator: '=', value: USER_USERNAME});
             }
             return conditions;
         }
