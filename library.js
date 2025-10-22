@@ -341,7 +341,7 @@ builder.add('widgets','events', class extends builder.ComponentClass {
                 // Set Content
                 object.owner = $(document.createElement("span")).addClass('cursor-pointer event-owner').html('<i class="me-1 bi bi-person"></i>'+record.owner.username).prependTo(object.tools);
                 object.owner.click(function(){
-                    self._builder.Widget('vcard',{data: record.owner.vcard});
+                    self._builder.Widget('vcard',{data: record.owner.vcard.id});
                 });
                 object.delete = $(document.createElement("button")).attr({
                     'type': 'button',
